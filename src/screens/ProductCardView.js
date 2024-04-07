@@ -2,22 +2,26 @@ import { StyleSheet, Text, TouchableOpacity, View ,Image} from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, SIZES } from '../constants/index';
+import { useNavigation } from '@react-navigation/native';
 
 // import { useNavigation } from '@react-navigation/native';
 
-const ProductCardView = () => {
-//   const navigation = useNavigation();
+const ProductCardView = ({item}) => {
+   const navigation = useNavigation();
   return (
-    <TouchableOpacity >
+    <TouchableOpacity onPress={()=> navigation.navigate("ProductDetails" , {item})}>
         <View style={styles.container}>
             <View style={styles.imageContainers}>
-            <Image source={require('../../fn3.jpg')} style={styles.image} />
+            <Image
+                source={{uri : item.imageUrl}}
+                style = {styles.image}
+                />
 
             </View>
             <View style={styles.details}>
-                <Text style={styles.title} numberOfLines={1}>Product Title</Text>
-                <Text style={styles.supplier} numberOfLines={1}>Product Supplier</Text>
-                <Text style={styles.price}>Item Price</Text>
+            <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
+                <Text style={styles.supplier} numberOfLines={1}> {item.supplier} </Text>
+                <Text style={styles.price}>{item.price}</Text>
 
             </View>
 
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
 
     container:{
         width:179,
-        height: 215,
+        height: 260,
         marginEnd:22,
         borderRadius: SIZES.medium,
         backgroundColor: COLORS.secondary,
@@ -78,8 +82,8 @@ const styles = StyleSheet.create({
             },
     addBtn:{
         position:"absolute",
-        bottom:SIZES.xSmall,
-        right: SIZES.xSmall,
+        bottom:SIZES.xSmall - 5,
+        right: SIZES.xSmall -7,
     }
 });
 

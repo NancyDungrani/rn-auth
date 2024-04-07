@@ -5,14 +5,20 @@ import { AuthContext } from '../context/AuthContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, SIZES } from '../constants/index';
 import ProductRow from '../screens/ProductRow';
+import CartScreen from './CartScreen';
 import Carousel from 'react-native-snap-carousel';
 import CarouselScreen from '../innerScreens/CarouselScreen';
+import { useNavigation } from '@react-navigation/native';
 
 
-const HomeScreen = ({ navigation }) => {
+
+const HomeScreen = () => {
   const { userInfo, isLoading, logout } = useContext(AuthContext);
   const scrollViewRef = useRef(null);
-
+  const navigation = useNavigation();
+  const navigateToCart = () => {
+    navigation.navigate('CartScreen');
+  };
   // const handleLogout = () => {
   //   logout(navigation);
   // };
@@ -38,15 +44,15 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView>
       <View style={styles.appBarWrapper}>
         <View style={styles.appBar}>
-          <Icon name='location-outline' size={24} />
+          <Icon name='location-outline' size={28} />
           <Text style={styles.location}>Barrie, Ontario </Text>
 
           <View style={{ alignItems: "flex-end" }}>
             <View style={styles.cartCount}>
-              <Text style={styles.cartNumber}> 8 </Text>
+              <Text style={styles.cartNumber}> 5 </Text>
             </View>
-            <TouchableOpacity>
-              <Icon name="search-outline" size={24} />
+            <TouchableOpacity onPress={navigateToCart}>
+              <Icon name="cart" size={28} />
             </TouchableOpacity>
           </View>
         </View>

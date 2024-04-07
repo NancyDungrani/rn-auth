@@ -8,6 +8,8 @@ import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import ProductDetails from '../screens/ProductDetails';
+import CartScreen from '../screens/CartScreen';
 import { AuthContext } from '../context/AuthContext';
 import SplashScreen from '../screens/SplashScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,11 +32,25 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {userInfo.token ? (
-          <Stack.Screen
-            name="Home"
-            component={HomeTabNavigator}
-            options={{ headerShown: false }}
-          />
+           <>
+           <Stack.Screen
+             name="Home"
+             component={HomeTabNavigator}
+             options={{ headerShown: false }}
+           />
+           <Stack.Screen
+             name="ProductDetails"
+             component={ProductDetails} // Add ProductDetailsScreen as a screen
+             options={{ headerShown: false }}
+            // options={{ title: 'Product Details' }} // Optional title for the screen
+           />
+           <Stack.Screen
+             name="CartScreen"
+             component={CartScreen} // Add ProductDetailsScreen as a screen
+             options={{ headerShown: false }}
+            // options={{ title: 'Product Details' }} // Optional title for the screen
+           />
+         </>
         ) : (
           <>
             <Stack.Screen
@@ -47,6 +63,7 @@ const Navigation = () => {
               component={RegisterScreen}
               options={{ headerShown: false }}
             />
+            
           </>
         )}
       </Stack.Navigator>
@@ -56,7 +73,8 @@ const Navigation = () => {
 
 const HomeTabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator  screenOptions={{ headerShown: false }} // Hide header for all screens in the navigator
+    >
     <Tab.Screen 
     name="Home Haul"
     component={HomeScreen}
@@ -95,6 +113,7 @@ const HomeTabNavigator = () => {
       )
     }}
   />
+ 
    </Tab.Navigator>
   
   );

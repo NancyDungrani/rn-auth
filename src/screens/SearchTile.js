@@ -2,21 +2,25 @@ import { Image,StyleSheet,ScrollView, Text, View , TouchableOpacity , FlatList} 
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES , SHADOWS} from '../constants/index';
+import { useNavigation } from '@react-navigation/native';
 
 
-const SearchTile = () => {
+
+const SearchTile = ({item}) => {
+    const navigation = useNavigation();
   return (
   <View >
-    <TouchableOpacity  style = {styles.container} onPress={() => {}}>
+    <TouchableOpacity  style = {styles.container} onPress={()=> navigation.navigate("ProductDetails" , {item})}>
         <View style= {styles.image}>
-            <Image source={require('../assets/images/Pose23.jpg')}
-            style = {styles.productImg}
-            />
+            <Image
+                source={{uri : item.imageUrl}}
+                style = {styles.productImg}
+                />
         </View>
         <View style = {styles.textContainer}>
-            <Text style ={styles.productTitle}>Product Title</Text>
-            <Text style ={styles.supplier}>Product Supplier</Text>
-            <Text style ={styles.supplier}>Item Price</Text>
+            <Text style ={styles.productTitle}>{item.title}</Text>
+            <Text style ={styles.supplier}>{item.supplier}</Text>
+            <Text style ={styles.price}>{item.price}</Text>
 
         </View>
     </TouchableOpacity>
@@ -36,7 +40,9 @@ const styles = StyleSheet.create({
         shadowColor : COLORS.lightWhite,
         backgroundColor : "#FFF",
         borderRadius : SIZES.small,
-        width : 360
+        width : 360,
+        marginHorizontal: SIZES.small,
+        
     },
     image : {
         width : 100,
