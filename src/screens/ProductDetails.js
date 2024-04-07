@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
 import { COLORS, SIZES } from '../constants/index';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 const ProductDetails = ({ navigation }) => {
   const route = useRoute();
   const { item } = route.params;
-  const { addToCart , userInfo} = useContext(AuthContext); // Access addToCart function from AuthContext
+  const { addToCart, userInfo } = useContext(AuthContext); // Access addToCart function from AuthContext
 
   const [count, setCount] = useState(1);
 
@@ -26,6 +26,7 @@ const ProductDetails = ({ navigation }) => {
   const handleAddToCart = () => {
     const userId = ''; // Add user ID here
     addToCart(userInfo._id, item._id, count); // Call addToCart function with userId, item ID, and quantity
+    Alert.alert('Success', 'Item added to cart', [{ text: 'OK', onPress: () => console.log('OK Pressed') }]);
   };
 
   return (
@@ -230,8 +231,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   }
-
-
 });
 
-export default ProductDetails
+export default ProductDetails;

@@ -129,15 +129,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Function to get cart items
-  const getCart = async (userId) => {
+  const getOldCart = async (userId) => {
     setIsLoading(true);
   
     try {
       const res = await axios.get(`${BASE_URL}/cart/find/${userId}`);
-      console.log("nancyyy",res)
       const cartData = res.data;
       setIsLoading(false);
-      console.log("nancy 2" ,cartData.products)
+      console.log("cartdata.products me ye hai");
+cartData[0].products.forEach(product => {
+    console.log(product);
+});
       return cartData.products || []; // Return products array from cartData, or an empty array if undefined
     } catch (error) {
       console.error('Error getting cart items:', error);
@@ -145,6 +147,28 @@ export const AuthProvider = ({ children }) => {
       return []; // Return empty array in case of error
     }
   };
+
+
+  const getCart = (userId) => {
+    return new Promise((resolve, reject) => {
+      setIsLoading(false);
+  
+      axios
+        .get(`${BASE_URL}/cart/find/${userId}`)
+        .then((res) => {
+          let cartData = res.data;
+          setIsLoading(false);
+          console.log("nancyyy!!!",cartData[0]);
+          resolve(cartData[0]);
+        })
+        .catch((error) => {
+          console.error('Error getting cart items:', error);
+          setIsLoading(false);
+          reject(error);
+        });
+    });
+  };
+  
 
   // Function to delete item from the cart
   const deleteCartItem = async (cartItemId) => {
